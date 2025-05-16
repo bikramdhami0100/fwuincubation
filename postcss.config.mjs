@@ -8,14 +8,25 @@ const config = {
   theme: {
     extend: {
       colors: {
-        'brand-primary': '#4A90E2', // A nice blue
-        'brand-secondary': '#50E3C2', // A teal/mint
-        'brand-accent': '#F5A623', // An orange/gold
-        'brand-dark': '#2C3E50',   // A dark blue/charcoal
-        'brand-light': '#F4F6F8',  // A very light gray
+        'brand-primary': '#0047AB', // Royal blue - primary university color
+        'brand-secondary': '#00796B', // Teal green - secondary color
+        'brand-accent': '#FFD700', // Gold - accent color for highlights
+        'brand-dark': '#0A2342',   // Dark navy blue - for footer/dark sections
+        'brand-light': '#F0F8FF',  // Alice blue - light background
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'], // Example: Using Inter font
+        sans: ['var(--font-geist-sans)', 'Inter', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'monospace'],
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
     },
   },
