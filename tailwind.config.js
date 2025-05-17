@@ -20,6 +20,8 @@ module.exports = {
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
+        'float-slow': 'float 15s ease-in-out infinite',
+        'float-reverse': 'float-reverse 15s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
         'subtle-zoom': 'subtle-zoom 20s ease-in-out infinite',
@@ -29,12 +31,26 @@ module.exports = {
         'slide-in-right': 'slide-in-right 0.8s ease-out',
         'fade-in-up': 'fade-in-up 0.8s ease-out',
         'fade-in-down': 'fade-in-down 0.8s ease-out',
+        'fadeIn': 'fadeIn 1s ease-in forwards',
         'rotate-slow': 'rotate 8s linear infinite',
+        'fadeSlideIn': 'fadeSlideIn 0.5s ease-out forwards',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        'float-reverse': {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '50%': { transform: 'translateY(20px) translateX(-20px)' },
+        },
+        'fadeIn': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fadeSlideIn': {
+          'from': { opacity: '0', transform: 'translateY(10px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
         },
         'pulse-subtle': {
           '0%, 100%': { transform: 'scale(1)' },

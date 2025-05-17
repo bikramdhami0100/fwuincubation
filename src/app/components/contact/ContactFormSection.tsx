@@ -37,91 +37,158 @@ const ContactFormSection = () => {
 
   if (submissionStatus === 'success') {
     return (
-      <div className="bg-white p-8 rounded-xl shadow-xl text-center">
-        <FiCheckCircle className="mx-auto text-6xl text-green-500 mb-4" />
-        <h3 className="text-2xl font-semibold text-brand-dark mb-2">Message Sent!</h3>
-        <p className="text-gray-600 mb-6">
-          Thank you for contacting us. We will get back to you as soon as possible.
+      <div className="bg-white p-8 md:p-10 rounded-2xl shadow-xl text-center border border-gray-100">
+        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6">
+          <FiCheckCircle className="text-green-500 text-4xl" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">Message Sent!</h3>
+        <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+          Thank you for contacting the FWU Incubation Center. We&apos;ve received your message and will get back to you as soon as possible.
         </p>
-        <button
-          onClick={() => setSubmissionStatus('idle')}
-          className="bg-brand-primary hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors"
-        >
-          Send Another Message
-        </button>
+        <div className="flex flex-col items-center space-y-4">
+          <p className="text-sm text-gray-500 mb-2">
+            You will receive a confirmation email shortly.
+          </p>
+          <button
+            onClick={() => setSubmissionStatus('idle')}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 hover:scale-105 transform"
+          >
+            Send Another Message
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-8 md:p-10 rounded-xl shadow-xl">
-      <h2 className="text-3xl font-bold text-brand-dark mb-2">Send Us a Message</h2>
-      <p className="text-gray-600 mb-8">
-        Have a question or want to learn more? Fill out the form below.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <div className="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-100 hover:border-indigo-100 transition-all duration-300 hover:shadow-indigo-100/20">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name <span className="text-red-500">*</span>
+          <label htmlFor="name" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+            Full Name <span className="text-red-500 ml-1">*</span>
           </label>
-          <input
-            type="text"
-            id="name"
-            className={`w-full px-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 ${errors.name ? 'focus:ring-red-300' : 'focus:ring-brand-primary'} focus:border-transparent outline-none transition-colors`}
-            placeholder="e.g., John Doe"
-            {...register("name", { required: "Full name is required." })}
-          />
-          {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
+          <div className="relative">
+            <input
+              type="text"
+              id="name"
+              className={`w-full px-4 py-3 pl-10 border-2 ${
+                errors.name ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-indigo-300'
+              } rounded-lg ${
+                errors.name ? 'focus:ring-red-200' : 'focus:ring-indigo-100'
+              } focus:ring-4 outline-none transition-all`}
+              placeholder="e.g., Rajesh Sharma"
+              {...register("name", { required: "Full name is required." })}
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${errors.name ? 'text-red-400' : 'text-indigo-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+          </div>
+          {errors.name && (
+            <div className="mt-2 flex items-start text-sm text-red-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span>{errors.name.message}</span>
+            </div>
+          )}
         </div>
 
+        {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address <span className="text-red-500">*</span>
+          <label htmlFor="email" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+            Email Address <span className="text-red-500 ml-1">*</span>
           </label>
-          <input
-            type="email"
-            id="email"
-            className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 ${errors.email ? 'focus:ring-red-300' : 'focus:ring-brand-primary'} focus:border-transparent outline-none transition-colors`}
-            placeholder="you@example.com"
-            {...register("email", {
-              required: "Email is required.",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address.",
-              },
-            })}
-          />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
+          <div className="relative">
+            <input
+              type="email"
+              id="email"
+              className={`w-full px-4 py-3 pl-10 border-2 ${
+                errors.email ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-indigo-300'
+              } rounded-lg ${
+                errors.email ? 'focus:ring-red-200' : 'focus:ring-indigo-100'
+              } focus:ring-4 outline-none transition-all`}
+              placeholder="you@example.com"
+              {...register("email", {
+                required: "Email is required.",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address.",
+                },
+              })}
+            />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${errors.email ? 'text-red-400' : 'text-indigo-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          {errors.email && (
+            <div className="mt-2 flex items-start text-sm text-red-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span>{errors.email.message}</span>
+            </div>
+          )}
         </div>
 
+        {/* Message Field */}
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-            Your Message <span className="text-red-500">*</span>
+          <label htmlFor="message" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+            Your Message <span className="text-red-500 ml-1">*</span>
           </label>
-          <textarea
-            id="message"
-            rows={5}
-            className={`w-full px-4 py-3 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 ${errors.message ? 'focus:ring-red-300' : 'focus:ring-brand-primary'} focus:border-transparent outline-none transition-colors`}
-            placeholder="Write your message here..."
-            {...register("message", {
-              required: "Message is required.",
-              minLength: { value: 10, message: "Message must be at least 10 characters." }
-            })}
-          />
-          {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
+          <div className="relative">
+            <textarea
+              id="message"
+              rows={6}
+              className={`w-full px-4 py-3 border-2 ${
+                errors.message ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-indigo-300'
+              } rounded-lg ${
+                errors.message ? 'focus:ring-red-200' : 'focus:ring-indigo-100'
+              } focus:ring-4 outline-none transition-all`}
+              placeholder="Write your message here... Please include details about your inquiry or how we can help you."
+              {...register("message", {
+                required: "Message is required.",
+                minLength: { value: 10, message: "Message must be at least 10 characters." }
+              })}
+            />
+          </div>
+          {errors.message && (
+            <div className="mt-2 flex items-start text-sm text-red-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span>{errors.message.message}</span>
+            </div>
+          )}
         </div>
 
+        {/* Error Message */}
         {submissionStatus === 'error' && (
-          <div className="flex items-center p-3 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-            <FiAlertCircle className="mr-2 flex-shrink-0" />
-            <span><strong>Error:</strong> Could not send message. Please try again.</span>
+          <div className="flex items-center p-5 text-sm text-red-700 bg-red-100 rounded-xl border border-red-200" role="alert">
+            <FiAlertCircle className="text-xl mr-3 text-red-500" />
+            <div>
+              <p className="font-bold">Message Not Sent</p>
+              <p>There was an error sending your message. Please try again or contact us directly.</p>
+            </div>
           </div>
         )}
 
+        {/* Privacy Policy */}
+        <div className="text-sm text-gray-500">
+          <p>
+            By submitting this form, you agree to our <a href="#" className="text-indigo-600 hover:underline">Privacy Policy</a> and consent to being contacted regarding your inquiry.
+          </p>
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex justify-center items-center bg-brand-accent hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all duration-300 hover:scale-105 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {isSubmitting ? (
             <>
@@ -129,7 +196,7 @@ const ContactFormSection = () => {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              Sending...
+              Sending Message...
             </>
           ) : (
             <>

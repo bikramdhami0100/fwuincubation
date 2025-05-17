@@ -1,40 +1,42 @@
 // components/home/FeaturedStartups.tsx
-import SectionTitle from '../shared/SectionTitle';
+"use client"
 import StartupCard, { Startup } from './StartupCard';
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
+import { FiArrowRight, FiBriefcase } from 'react-icons/fi';
 
 const startupsData: Startup[] = [
   {
     id: 's1',
-    name: 'Faculty of Science & Technology',
-    logoUrl: '/startup-logo1.png',
-    description: 'Offering cutting-edge programs in Computer Science, Engineering, and Environmental Science.',
-    website: 'https://fwu.edu.np/science',
-    industry: 'Science & Tech',
+    name: 'EcoHarvest',
+    logoUrl: 'https://images.unsplash.com/photo-1526666923127-b2970f64b422?q=80&w=200&auto=format&fit=crop',
+    description: 'Sustainable agricultural technology solutions for small-scale farmers.',
+    website: '/startups/ecoharvest',
+    industry: 'AgriTech',
   },
   {
     id: 's2',
-    name: 'Faculty of Management',
-    logoUrl: '/startup-logo2.png',
-    description: 'Preparing future business leaders with programs in Business Administration, Finance, and Marketing.',
-    website: 'https://fwu.edu.np/management',
-    industry: 'Management',
+    name: 'MediConnect',
+    logoUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=200&auto=format&fit=crop',
+    description: 'Telemedicine platform connecting rural patients with healthcare providers.',
+    website: '/startups/mediconnect',
+    industry: 'HealthTech',
   },
   {
     id: 's3',
-    name: 'Faculty of Humanities',
-    logoUrl: '/startup-logo3.png',
-    description: 'Exploring human culture and society through programs in Literature, Sociology, and Philosophy.',
-    website: 'https://fwu.edu.np/humanities',
-    industry: 'Humanities',
+    name: 'EduReach',
+    logoUrl: 'https://images.unsplash.com/photo-1503428593586-e225b39bddfe?q=80&w=200&auto=format&fit=crop',
+    description: 'Digital education solutions for underserved communities.',
+    website: '/startups/edureach',
+    industry: 'EdTech',
   },
   {
     id: 's4',
-    name: 'Faculty of Education',
-    logoUrl: '/startup-logo4.png',
-    description: 'Training the next generation of educators with innovative teaching methodologies and practices.',
-    website: 'https://fwu.edu.np/education',
-    industry: 'Education',
+    name: 'SolarLife',
+    logoUrl: 'https://images.unsplash.com/photo-1548614606-52b4451f994b?q=80&w=200&auto=format&fit=crop',
+    description: 'Affordable solar energy solutions for homes and small businesses.',
+    website: '/startups/solarlife',
+    industry: 'CleanTech',
   },
 ];
 
@@ -55,13 +57,14 @@ const FeaturedStartups = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -78,22 +81,32 @@ const FeaturedStartups = () => {
   }, [isVisible]);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle, #4a90e2 1px, transparent 1px)',
-          backgroundSize: '30px 30px'
-        }}></div>
+    <section ref={sectionRef} className="py-20 md:py-28 bg-gradient-to-b from-white to-indigo-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-100 rounded-full opacity-30 blur-3xl -translate-x-1/3 -translate-y-1/3"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-100 rounded-full opacity-30 blur-3xl translate-x-1/4 translate-y-1/4"></div>
+
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: 'radial-gradient(#4338ca 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute -top-20 -left-20 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-      <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-teal-200 rounded-full opacity-20 blur-3xl"></div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className={`transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <SectionTitle title="Our Academic Faculties" subtitle="Excellence in Education" />
+        {/* Section header */}
+        <div className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-block mb-4">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto bg-indigo-100 rounded-full mb-4">
+              <FiBriefcase className="h-8 w-8 text-indigo-600" />
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Featured Startups</h2>
+          <div className="w-24 h-1 bg-indigo-600 mx-auto mb-6 rounded-full"></div>
+          <p className="text-xl text-gray-600 leading-relaxed">
+            Meet the innovative ventures that are transforming ideas into impactful solutions
+          </p>
         </div>
 
         <div className="relative mt-12">
@@ -102,12 +115,12 @@ const FeaturedStartups = () => {
             className="absolute w-full h-full transition-all duration-500 ease-in-out pointer-events-none"
             style={{
               clipPath: 'circle(15% at 0% 0%)',
-              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%)',
+              background: 'radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, rgba(79, 70, 229, 0) 70%)',
               transform: `translate(${25 * activeIndex}%, 0)`,
             }}
           ></div>
 
-          {/* Faculty Cards */}
+          {/* Startup Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {startupsData.map((startup, index) => (
               <div
@@ -126,30 +139,41 @@ const FeaturedStartups = () => {
           </div>
         </div>
 
-        {/*
-        // Example with Swiper.js (install swiper and its modules first)
-        // You'll need to style navigation/pagination or use default ones.
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={30}
-          loop={true}
-          pagination={{ clickable: true }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          breakpoints={{
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 30 },
-            1280: { slidesPerView: 4, spaceBetween: 30 },
-          }}
-          className="!pb-12" // Adjust padding for pagination
-        >
-          {startupsData.map((startup) => (
-            <SwiperSlide key={startup.id} className="h-auto">
-              <StartupCard startup={startup} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        */}
+        {/* Success metrics */}
+        <div className={`mt-20 bg-white rounded-2xl shadow-lg p-8 md:p-10 transition-all duration-700 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-indigo-600 mb-2">₹25M+</div>
+              <p className="text-gray-600">Funding Raised</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-indigo-600 mb-2">85%</div>
+              <p className="text-gray-600">Startup Success Rate</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-indigo-600 mb-2">200+</div>
+              <p className="text-gray-600">Jobs Created</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-indigo-600 mb-2">12</div>
+              <p className="text-gray-600">Industry Partners</p>
+            </div>
+          </div>
+        </div>
+
+        {/* View all startups button */}
+        <div className={`mt-12 text-center transition-all duration-700 delay-700 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <Link
+            href="/startups"
+            className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all duration-300 hover:-translate-y-1"
+          >
+            View All Startups
+            <FiArrowRight className="ml-2" />
+          </Link>
+          <p className="text-gray-500 mt-4 text-sm">
+            Discover more success stories from our incubation center
+          </p>
+        </div>
       </div>
     </section>
   );

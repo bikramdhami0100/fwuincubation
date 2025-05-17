@@ -1,34 +1,52 @@
-// components/programs/ProgramTypeCard.tsx
-import Link from 'next/link';
 import { IconType } from 'react-icons';
 import { FiArrowRight } from 'react-icons/fi';
+import Link from 'next/link';
 
 interface ProgramTypeCardProps {
   icon: React.ReactElement<IconType>;
   title: string;
   description: string;
-  link: string;
   linkText?: string;
   bgColorClass?: string; // For varied card backgrounds
+  slug: string;
 }
 
 const ProgramTypeCard: React.FC<ProgramTypeCardProps> = ({
   icon,
   title,
   description,
-  link,
   linkText = "Learn More",
-  bgColorClass = "bg-white"
+  bgColorClass = "bg-white",
+  slug
 }) => {
   return (
-    <div className={`${bgColorClass} rounded-xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 group flex flex-col h-full`}>
-      <div className="text-brand-accent mb-6 text-5xl flex justify-center md:justify-start">
-        {icon}
+    <div className={`${bgColorClass} rounded-2xl border border-gray-100 shadow-lg p-8 flex flex-col h-full relative overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}>
+      {/* Top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+
+      {/* Icon with animated background */}
+      <div className="relative mb-8">
+        <div className="w-16 h-16 rounded-2xl bg-blue-50 flex items-center justify-center mb-2 group-hover:bg-blue-100 transition-colors duration-300">
+          <div className="text-blue-600 text-3xl">
+            {icon}
+          </div>
+        </div>
+        <div className="w-8 h-1 bg-blue-200 rounded-full"></div>
       </div>
-      <h3 className="text-2xl font-semibold text-brand-dark mb-4">{title}</h3>
-      <p className="text-gray-600 mb-6 flex-grow">{description}</p>
-      <Link href={link} className="mt-auto inline-flex items-center text-brand-primary font-semibold group-hover:text-brand-accent transition-colors">
-          {linkText} <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+
+      <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">{title}</h3>
+      <p className="text-gray-600 mb-8 flex-grow leading-relaxed">{description}</p>
+
+      <Link
+        href={`/programs/${slug}`}
+        className="mt-auto flex items-center"
+      >
+        <span className="mr-3 font-semibold text-blue-600">{linkText}</span>
+        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
+          <span className="transform group-hover:translate-x-1 transition-transform duration-300">
+            <FiArrowRight className="text-blue-600" />
+          </span>
+        </div>
       </Link>
     </div>
   );

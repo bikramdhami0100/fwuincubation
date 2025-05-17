@@ -3,14 +3,15 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Logo from '../common/Logo';
 import { FiMenu, FiX, FiGlobe, FiChevronDown } from 'react-icons/fi';
-import { FaGraduationCap, FaRocket, FaUsers, FaEnvelope, FaHome } from 'react-icons/fa';
+import { FaGraduationCap, FaRocket, FaUsers, FaEnvelope, FaHome, FaRegLightbulb } from 'react-icons/fa';
 
-const menuItems = [
-  { name: 'Home', href: '/', icon: <FaHome className="mr-2" /> },
-  { name: 'About Us', href: '/about', icon: <FaUsers className="mr-2" /> },
-  { name: 'Programs', href: '/programs', icon: <FaGraduationCap className="mr-2" /> },
-  { name: 'Startups', href: '/startups', icon: <FaRocket className="mr-2" /> },
-  { name: 'Contact', href: '/contact', icon: <FaEnvelope className="mr-2" /> },
+const menuItems: { name: string; href: string; icon: React.ReactNode }[] = [
+  { name: 'Home', href: '/', icon: <FaHome className="w-4 h-4" /> },
+  { name: 'About', href: '/about', icon: <FaUsers className="w-4 h-4" /> },
+  { name: 'Programs', href: '/programs', icon: <FaGraduationCap className="w-4 h-4" /> },
+  { name: 'Startups', href: '/startups', icon: <FaRocket className="w-4 h-4" /> },
+  { name: 'Contact', href: '/contact', icon: <FaEnvelope className="w-4 h-4" /> },
+  { name: 'Community', href: '/community', icon: <FaRegLightbulb className="w-4 h-4" /> }
 ];
 
 const Header = () => {
@@ -18,6 +19,7 @@ const Header = () => {
   const [currentLang, setCurrentLang] = useState('EN');
   const [scrolled, setScrolled] = useState(false);
   const [activeItem, setActiveItem] = useState('/');
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -39,157 +41,289 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMobileMenuOpen && !target.closest('#mobile-menu') && !target.closest('#mobile-menu-button')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
+
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+
+  // const toggleLangDropdown = () => setIsLangDropdownOpen(!isLangDropdownOpen);
 
   const switchLanguage = (lang: string) => {
     setCurrentLang(lang);
+    setIsLangDropdownOpen(false);
     // Add actual language switching logic here
     console.log(`Language switched to ${lang}`);
   };
 
   return (
-    <header className={`sticky top-0 z-50 text-white transition-all duration-300 ${scrolled ? 'bg-blue-800/95 backdrop-blur-md shadow-lg' : 'bg-gradient-to-r from-blue-900 to-blue-700'}`}>
+    <header className="sticky top-0 z-50 text-white">
       {/* Animated top border */}
-      <div className="h-1 w-full bg-gradient-to-r from-yellow-400 via-teal-400 to-blue-500" style={{
+      <div className="h-1 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500" style={{
         backgroundSize: '200% 100%',
         animation: 'gradientMove 8s linear infinite'
       }}></div>
 
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-10 right-1/4 w-20 h-20 bg-yellow-400/10 rounded-full blur-xl"></div>
-        <div className="absolute -bottom-8 left-1/3 w-24 h-24 bg-teal-400/10 rounded-full blur-xl"></div>
-      </div>
+      {/* Main header background with glass effect */}
+      <div className={`relative transition-all duration-500 ${
+        scrolled
+          ? 'bg-indigo-900/90 backdrop-blur-md shadow-lg'
+          : 'bg-gradient-to-r from-indigo-900 to-blue-900'
+      }`}>
+        {/* Decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-purple-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo with hover effect */}
-          <div className="transform transition-transform duration-300 hover:scale-105">
-            <Logo />
+          {/* Animated dots */}
+          <div className="absolute inset-0">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1.5 h-1.5 bg-white/20 rounded-full"
+                style={{
+                  top: `${20 + Math.random() * 60}%`,
+                  left: `${20 + Math.random() * 60}%`,
+                  animation: `float ${3 + Math.random() * 4}s ease-in-out infinite ${Math.random() * 2}s`
+                }}
+              ></div>
+            ))}
           </div>
+        </div>
 
-          {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center">
-            <div className="flex space-x-2">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo with hover effect */}
+            <div className="relative z-10 transform transition-transform duration-300 hover:scale-105">
+              <Logo />
+            </div>
+
+            {/* Desktop Menu */}
+            <nav className="hidden lg:flex items-center space-x-1">
               {menuItems.map((item) => {
                 const isActive = activeItem === item.href;
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`px-4 py-2 rounded-md text-white font-medium transition-all duration-300 relative group overflow-hidden ${
-                      isActive ? 'bg-blue-600/50 text-white' : 'hover:bg-blue-600/30'
+                    className={`px-4 py-2.5 rounded-lg text-white font-medium transition-all duration-300 relative group ${
+                      isActive
+                        ? 'bg-white/10 text-white before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-indigo-400'
+                        : 'hover:bg-white/5'
                     }`}
                   >
-                    {/* Hover effect */}
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                    {/* Text with icon on hover */}
-                    <span className="flex items-center">
-                      <span className="opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 absolute left-2">
+                    <span className="relative flex items-center">
+                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/10 mr-2 group-hover:bg-indigo-500/20 transition-colors duration-300">
                         {item.icon}
                       </span>
-                      <span className="group-hover:translate-x-6 transition-transform duration-300">{item.name}</span>
+                      {item.name}
                     </span>
+
+                    {/* Bottom border animation */}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-400 to-blue-400 group-hover:w-full transition-all duration-300 ease-out"></span>
+                  </Link>
+                );
+              })}
+
+              {/* Apply Button */}
+              <Link
+                href="/apply"
+                className="ml-4 relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center justify-center px-6 py-2.5 rounded-lg font-bold bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 shadow-md hover:shadow-indigo-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                  Apply Now
+                  <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </span>
+
+                {/* Glow effect */}
+                <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"></span>
+              </Link>
+
+              {/* Language Switcher - Desktop */}
+              <div className="relative ml-4">
+                <button
+                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                  className="flex items-center text-white font-medium bg-white/10 hover:bg-white/15 px-3 py-2.5 rounded-lg transition-all duration-300 border border-white/10 hover:border-white/20"
+                >
+                  <FiGlobe className="mr-1.5" />
+                  <span>{currentLang}</span>
+                  <FiChevronDown className={`ml-1 transition-transform duration-300 ${isLangDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isLangDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white/95 backdrop-blur-md rounded-xl shadow-xl z-10 border border-indigo-100 overflow-hidden transition-all duration-300 animate-fadeIn">
+                    <div className="h-1 w-full bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+                    <a
+                      onClick={() => switchLanguage('EN')}
+                      className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 cursor-pointer transition-colors duration-300 border-b border-gray-100"
+                    >
+                      <span className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-2 text-indigo-600">EN</span>
+                      English
+                    </a>
+                    <a
+                      onClick={() => switchLanguage('NE')}
+                      className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 cursor-pointer transition-colors duration-300"
+                    >
+                      <span className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center mr-2 text-indigo-600">NE</span>
+                      नेपाली
+                    </a>
+                  </div>
+                )}
+              </div>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden flex items-center space-x-2">
+              <Link
+                href="/apply"
+                className="relative overflow-hidden group"
+              >
+                <span className="relative z-10 flex items-center justify-center px-4 py-2 rounded-lg font-bold bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 shadow-md transition-all duration-300">
+                  Apply
+                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </span>
+              </Link>
+
+              <button
+                onClick={() => switchLanguage(currentLang === 'EN' ? 'NE' : 'EN')}
+                className="p-2.5 text-white bg-white/10 hover:bg-white/15 rounded-lg transition-all duration-300 border border-white/10 hover:border-white/20"
+                aria-label="Switch Language"
+              >
+                <FiGlobe size={20} />
+              </button>
+
+              <button
+                id="mobile-menu-button"
+                onClick={toggleMobileMenu}
+                className="p-2.5 text-white bg-white/10 hover:bg-white/15 rounded-lg transition-all duration-300 border border-white/10 hover:border-white/20"
+                aria-label="Open menu"
+              >
+                {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      {/* Mobile Menu with animation */}
+      <div
+        id="mobile-menu"
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
+          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-indigo-900/80 backdrop-blur-sm transition-opacity duration-500 ${
+            isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        ></div>
+
+        {/* Menu panel */}
+        <div
+          className={`absolute top-[81px] right-0 bottom-0 w-full max-w-sm bg-gradient-to-b from-indigo-800 to-indigo-900 shadow-2xl transform transition-transform duration-500 ease-out ${
+            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          {/* Menu header */}
+          <div className="p-6 border-b border-indigo-700/50">
+            <h3 className="text-xl font-bold text-white">Menu</h3>
+            <p className="text-indigo-200 text-sm">Far Western University</p>
+          </div>
+
+          {/* Menu items */}
+          <nav className="px-3 py-4">
+            <div className="space-y-2">
+              {menuItems.map((item, index) => {
+                const isActive = activeItem === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                      isActive
+                        ? 'bg-indigo-700/50 text-white'
+                        : 'text-indigo-100 hover:bg-indigo-700/30 hover:text-white'
+                    }`}
+                    style={{
+                      transitionDelay: `${100 + index * 50}ms`,
+                      animation: isMobileMenuOpen ? `fadeSlideIn 0.4s ease-out forwards ${100 + index * 50}ms` : 'none'
+                    }}
+                  >
+                    <span className="bg-indigo-600/50 p-2.5 rounded-lg mr-3 text-white">
+                      {item.icon}
+                    </span>
+                    {item.name}
                   </Link>
                 );
               })}
             </div>
 
-            {/* Apply Button with enhanced animation */}
-            <Link
-              href="/apply"
-              className="ml-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 px-6 py-2.5 rounded-lg font-bold shadow-md hover:shadow-yellow-400/20 hover:shadow-lg transition-all duration-300 relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-yellow-300 to-yellow-400 transition-all duration-300 transform -translate-x-full group-hover:translate-x-0"></span>
-              <span className="relative flex items-center justify-center">
-                Apply Now
-                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                </svg>
-              </span>
-            </Link>
-
-            {/* Language Switcher - Desktop with enhanced dropdown */}
-            <div className="relative group ml-4">
-              <button className="flex items-center text-white font-medium bg-blue-800/50 hover:bg-blue-700 px-3 py-2.5 rounded-md transition-all duration-300 border border-blue-600/30 hover:border-blue-500">
-                <FiGlobe className="mr-1.5" /> {currentLang}
-                <FiChevronDown className="ml-1 transform group-hover:rotate-180 transition-transform duration-300" />
-              </button>
-              <div className="absolute right-0 mt-1 w-36 bg-white/95 backdrop-blur-md rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-10 border border-blue-100 overflow-hidden">
-                <div className="h-1 w-full bg-gradient-to-r from-blue-500 to-teal-400"></div>
-                <a
-                  onClick={() => switchLanguage('EN')}
-                  className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 cursor-pointer transition-colors duration-300 border-b border-gray-100"
-                >
-                  <span className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mr-2 text-blue-600">EN</span>
-                  English
-                </a>
-                <a
-                  onClick={() => switchLanguage('UR')}
-                  className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 cursor-pointer transition-colors duration-300"
-                >
-                  <span className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center mr-2 text-blue-600">NE</span>
-                  नेपाली
-                </a>
+            {/* Additional mobile menu items */}
+            <div className="mt-8 pt-6 border-t border-indigo-700/30">
+              <div className="px-4 mb-6">
+                <p className="text-xs uppercase tracking-wider text-indigo-300 mb-3">Language</p>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => switchLanguage('EN')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
+                      currentLang === 'EN'
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-indigo-800/50 text-indigo-200 hover:bg-indigo-700'
+                    }`}
+                  >
+                    English
+                  </button>
+                  <button
+                    onClick={() => switchLanguage('NE')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
+                      currentLang === 'NE'
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-indigo-800/50 text-indigo-200 hover:bg-indigo-700'
+                    }`}
+                  >
+                    नेपाली
+                  </button>
+                </div>
               </div>
+
+              <Link
+                href="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center px-4 py-3 text-indigo-100 hover:text-white"
+              >
+                <span className="bg-indigo-600/50 p-2.5 rounded-lg mr-3 text-white">
+                  <FaEnvelope className="w-4 h-4" />
+                </span>
+                Contact Us
+              </Link>
             </div>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <Link
-              href="/apply"
-              className="mr-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-blue-900 px-3 py-2 rounded-md text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 flex items-center"
-            >
-              Apply
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </Link>
-            <button
-              onClick={() => switchLanguage(currentLang === 'EN' ? 'UR' : 'EN')}
-              className="p-2 text-white hover:text-yellow-300 mr-2 bg-blue-800/70 hover:bg-blue-700 rounded-md transition-all duration-300 border border-blue-600/30"
-              aria-label="Switch Language"
-            >
-              <FiGlobe size={18} />
-            </button>
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 text-white hover:text-yellow-300 bg-blue-800/70 hover:bg-blue-700 rounded-md transition-all duration-300 border border-blue-600/30"
-              aria-label="Open menu"
-            >
-              {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-            </button>
+          {/* Footer */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-indigo-700/30 text-center">
+            <p className="text-indigo-200 text-sm">© 2024 Far Western University</p>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Menu with animation */}
-      <div
-        className={`md:hidden absolute top-20 left-0 right-0 bg-gradient-to-b from-blue-800 to-blue-900 shadow-lg z-40 border-b border-blue-700 transform transition-all duration-300 ${
-          isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'
-        }`}
-      >
-        <nav className="px-4 pt-2 pb-4 space-y-1">
-          {menuItems.map((item, index) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center px-4 py-3 rounded-md text-base font-medium text-white hover:text-yellow-300 hover:bg-blue-700/50 transition-all duration-300 border-b border-blue-700/30 last:border-0"
-              style={{
-                transitionDelay: `${index * 50}ms`,
-                animation: isMobileMenuOpen ? `fadeSlideIn 0.3s ease-out forwards ${index * 50}ms` : 'none'
-              }}
-            >
-              <span className="bg-blue-700/50 p-2 rounded-md mr-3 text-yellow-400">
-                {item.icon}
-              </span>
-              {item.name}
-            </Link>
-          ))}
-        </nav>
       </div>
 
       {/* CSS Animations */}
@@ -199,8 +333,16 @@ const Header = () => {
           100% { background-position: 200% 0%; }
         }
         @keyframes fadeSlideIn {
-          from { opacity: 0; transform: translateY(-10px); }
+          from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-10px) scale(1.2); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </header>

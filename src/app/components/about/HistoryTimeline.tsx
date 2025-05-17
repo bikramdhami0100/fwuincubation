@@ -1,4 +1,4 @@
-// components/about/HistoryTimeline.tsx
+"use client"
 import SectionTitle from '../shared/SectionTitle';
 import { useEffect, useState, useRef } from 'react';
 import { FaUniversity, FaGraduationCap, FaHandshake, FaGlobe } from 'react-icons/fa';

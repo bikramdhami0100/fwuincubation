@@ -170,182 +170,248 @@ const ApplicationForm = () => {
 
   if (submissionStatus === 'success') {
     return (
-      <div className="text-center py-10">
-        <FiCheckCircle className="mx-auto text-6xl text-green-500 mb-4" />
-        <h3 className="text-2xl font-semibold text-brand-dark mb-2">Application Submitted!</h3>
-        <p className="text-gray-600 mb-6">
+      <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
+        <div className="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6">
+          <FiCheckCircle className="text-green-500 text-4xl" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-3">Application Submitted!</h3>
+        <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
           Thank you for applying to the FWU Incubation Center. We have received your application and will
           be in touch soon regarding the next steps.
         </p>
-        <button
-          onClick={() => setSubmissionStatus('idle')}
-          className="bg-brand-primary hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors"
-        >
-          Submit Another Application
-        </button>
+        <div className="flex flex-col items-center space-y-4">
+          <p className="text-sm text-gray-500 mb-2">
+            You will receive a confirmation email shortly.
+          </p>
+          <button
+            onClick={() => setSubmissionStatus('idle')}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 hover:scale-105 transform"
+          >
+            Submit Another Application
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-10" noValidate>
       {/* Applicant Details */}
-      <fieldset className="border border-gray-300 p-6 rounded-lg">
-        <legend className="text-lg font-semibold text-brand-dark px-2">Applicant Details</legend>
-        <FormField
-          type="text"
-          name="applicantName"
-          label="Full Name"
-          register={register}
-          error={errors.applicantName}
-          placeholder="e.g., Fatima Ahmed"
-          isRequired
-        />
-        <div className="grid md:grid-cols-2 gap-6">
-          <FormField
-            type="email"
-            name="email"
-            label="Email Address"
-            register={register}
-            error={errors.email}
-            placeholder="you@example.com"
-            isRequired
-          />
-          <FormField
-            type="tel"
-            name="phone"
-            label="Phone Number"
-            register={register}
-            error={errors.phone}
-            placeholder="e.g., 0300-1234567"
-            isRequired
-          />
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-blue-50 px-6 py-4 border-b border-gray-100">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center">
+            <span className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full text-blue-600 mr-3 text-sm">1</span>
+            Applicant Details
+          </h3>
         </div>
-      </fieldset>
+        <div className="p-6">
+          <FormField
+            type="text"
+            name="applicantName"
+            label="Full Name"
+            register={register}
+            error={errors.applicantName}
+            placeholder="e.g., Fatima Ahmed"
+            isRequired
+          />
+          <div className="grid md:grid-cols-2 gap-6">
+            <FormField
+              type="email"
+              name="email"
+              label="Email Address"
+              register={register}
+              error={errors.email}
+              placeholder="you@example.com"
+              isRequired
+            />
+            <FormField
+              type="tel"
+              name="phone"
+              label="Phone Number"
+              register={register}
+              error={errors.phone}
+              placeholder="e.g., 0300-1234567"
+              isRequired
+            />
+          </div>
+        </div>
+      </div>
 
       {/* Team Member Details */}
-      <fieldset className="border border-gray-300 p-6 rounded-lg">
-        <legend className="text-lg font-semibold text-brand-dark px-2">Team Details</legend>
-        {Array.from({ length: teamMemberCount }).map((_, index) => (
-          <div key={index} className="mb-4 p-4 border border-dashed border-gray-200 rounded-md relative">
-            <h4 className="text-md font-medium text-gray-700 mb-2">Team Member {index + 1}</h4>
-            {index > 0 && ( // Allow removing only if not the first member
-              <button
-                type="button"
-                onClick={() => removeTeamMember(index)}
-                className="absolute top-2 right-2 text-red-500 hover:text-red-700 p-1"
-                aria-label="Remove Team Member"
-              >
-                <FiTrash2 size={18} />
-              </button>
-            )}
-            <div className="grid md:grid-cols-2 gap-6">
-              <FormField
-                type="text"
-                name={`teamMembers.${index}.name` as Path<FormValues>}
-                label="Member Name"
-                register={register}
-                error={errors.teamMembers?.[index]?.name}
-                placeholder="e.g., Ali Khan"
-                isRequired={index === 0}
-              />
-              <FormField
-                type="text"
-                name={`teamMembers.${index}.role` as Path<FormValues>}
-                label="Role in Startup"
-                register={register}
-                error={errors.teamMembers?.[index]?.role}
-                placeholder="e.g., CTO, Marketing Lead"
-                isRequired={index === 0}
-              />
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-blue-50 px-6 py-4 border-b border-gray-100">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center">
+            <span className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full text-blue-600 mr-3 text-sm">2</span>
+            Team Details
+          </h3>
+        </div>
+        <div className="p-6">
+          {Array.from({ length: teamMemberCount }).map((_, index) => (
+            <div
+              key={index}
+              className="mb-6 p-6 bg-gray-50 rounded-xl relative border border-gray-100"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="text-md font-bold text-gray-800 flex items-center">
+                  <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 text-xs flex items-center justify-center mr-2">
+                    {index + 1}
+                  </span>
+                  Team Member {index + 1}
+                </h4>
+                {index > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => removeTeamMember(index)}
+                    className="text-red-500 hover:text-red-700 p-1 hover:bg-red-50 rounded-full transition-colors"
+                    aria-label="Remove Team Member"
+                  >
+                    <FiTrash2 size={18} />
+                  </button>
+                )}
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <FormField
+                  type="text"
+                  name={`teamMembers.${index}.name` as Path<FormValues>}
+                  label="Member Name"
+                  register={register}
+                  error={errors.teamMembers?.[index]?.name}
+                  placeholder="e.g., Ali Khan"
+                  isRequired={index === 0}
+                />
+                <FormField
+                  type="text"
+                  name={`teamMembers.${index}.role` as Path<FormValues>}
+                  label="Role in Startup"
+                  register={register}
+                  error={errors.teamMembers?.[index]?.role}
+                  placeholder="e.g., CTO, Marketing Lead"
+                  isRequired={index === 0}
+                />
+              </div>
             </div>
-          </div>
-        ))}
-        {teamMemberCount < 5 && (
-          <button
-            type="button"
-            onClick={addTeamMember}
-            className="mt-2 flex items-center text-sm text-brand-primary hover:text-brand-accent font-medium"
-          >
-            <FiPlusCircle className="mr-2" /> Add Another Member (Max 5)
-          </button>
-        )}
-      </fieldset>
-
+          ))}
+          {teamMemberCount < 5 && (
+            <button
+              type="button"
+              onClick={addTeamMember}
+              className="flex items-center text-blue-600 hover:text-blue-800 font-medium py-2 px-4 rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors"
+            >
+              <FiPlusCircle className="mr-2" /> Add Another Team Member (Max 5)
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* Startup Idea */}
-      <fieldset className="border border-gray-300 p-6 rounded-lg">
-        <legend className="text-lg font-semibold text-brand-dark px-2">Startup Idea</legend>
-        <FormField
-          as="textarea" // Use 'as' prop here
-          type="textarea" // type still needed for FormField's generic constraint
-          name="startupIdea"
-          label="Startup Idea Summary"
-          register={register}
-          error={errors.startupIdea}
-          placeholder="Briefly describe your startup idea, the problem it solves, and your proposed solution (max 500 words)."
-          rows={6}
-          isRequired
-        />
-      </fieldset>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-blue-50 px-6 py-4 border-b border-gray-100">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center">
+            <span className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full text-blue-600 mr-3 text-sm">3</span>
+            Startup Idea
+          </h3>
+        </div>
+        <div className="p-6">
+          <FormField
+            as="textarea"
+            type="textarea"
+            name="startupIdea"
+            label="Startup Idea Summary"
+            register={register}
+            error={errors.startupIdea}
+            placeholder="Briefly describe your startup idea, the problem it solves, and your proposed solution (max 500 words)."
+            rows={6}
+            isRequired
+          />
+        </div>
+      </div>
 
       {/* Proposal Upload */}
-      <fieldset className="border border-gray-300 p-6 rounded-lg">
-        <legend className="text-lg font-semibold text-brand-dark px-2">Proposal Document</legend>
-        <label htmlFor="proposalFile" className="block text-sm font-medium text-gray-700 mb-1">
-          Upload Proposal (PDF, max 5MB) <span className="text-red-500">*</span>
-        </label>
-        <div className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 ${errors.proposalFile ? 'border-red-400' : 'border-gray-300'} border-dashed rounded-md`}>
-          <div className="space-y-1 text-center">
-            <FiUploadCloud className="mx-auto h-12 w-12 text-gray-400" />
-            <div className="flex text-sm text-gray-600">
-              <label
-                htmlFor="proposalFile"
-                className="relative cursor-pointer bg-white rounded-md font-medium text-brand-primary hover:text-brand-accent focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-primary"
-              >
-                <span>Upload a file</span>
-                <input
-                  id="proposalFile"
-                  type="file"
-                  className="sr-only"
-                  accept=".pdf"
-                  {...register("proposalFile")}
-                />
-              </label>
-              <p className="pl-1">or drag and drop</p>
-            </div>
-            <p className="text-xs text-gray-500">PDF up to 5MB</p>
-          </div>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-blue-50 px-6 py-4 border-b border-gray-100">
+          <h3 className="text-lg font-bold text-gray-900 flex items-center">
+            <span className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full text-blue-600 mr-3 text-sm">4</span>
+            Proposal Document
+          </h3>
         </div>
-        {fileName && <p className="mt-2 text-sm text-gray-700">Selected file: {fileName}</p>}
-        {errors.proposalFile && <p className="mt-1 text-xs text-red-500">{errors.proposalFile.message}</p>}
-      </fieldset>
+        <div className="p-6">
+          <label htmlFor="proposalFile" className="block text-sm font-medium text-gray-700 mb-2">
+            Upload Proposal (PDF, max 5MB) <span className="text-red-500">*</span>
+          </label>
+          <div
+            className={`mt-1 flex justify-center px-6 pt-6 pb-8 border-2 ${
+              errors.proposalFile ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-blue-50'
+            } border-dashed rounded-xl hover:bg-blue-100 transition-colors cursor-pointer`}
+          >
+            <div className="space-y-2 text-center">
+              <div className="mx-auto h-16 w-16 text-blue-500 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <FiUploadCloud className="h-8 w-8" />
+              </div>
+              <div className="flex flex-col text-sm text-gray-600">
+                <label
+                  htmlFor="proposalFile"
+                  className="relative cursor-pointer font-medium text-blue-600 hover:text-blue-700"
+                >
+                  <span>Click to upload a file</span>
+                  <input
+                    id="proposalFile"
+                    type="file"
+                    className="sr-only"
+                    accept=".pdf"
+                    {...register("proposalFile")}
+                  />
+                </label>
+                <p className="text-gray-500">or drag and drop</p>
+              </div>
+              <p className="text-xs text-gray-500">PDF up to 5MB</p>
+            </div>
+          </div>
+          {fileName && (
+            <div className="mt-3 flex items-center text-sm text-gray-700 bg-blue-50 p-3 rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Selected file: <span className="font-medium ml-1">{fileName}</span>
+            </div>
+          )}
+          {errors.proposalFile && <p className="mt-2 text-sm text-red-600">{errors.proposalFile.message}</p>}
+        </div>
+      </div>
 
       {/* Submission Button & Error Message */}
       {submissionStatus === 'error' && (
-        <div className="flex items-center p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-          <FiAlertCircle className="mr-2" />
-          <span><strong>Error:</strong> Submission failed. Please check your input and try again.</span>
+        <div className="flex items-center p-5 text-sm text-red-700 bg-red-100 rounded-xl border border-red-200" role="alert">
+          <FiAlertCircle className="text-xl mr-3 text-red-500" />
+          <div>
+            <p className="font-bold">Submission Failed</p>
+            <p>Please check your input and try again. If the problem persists, contact our support team.</p>
+          </div>
         </div>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting || submissionStatus === 'submitting'}
-        className="w-full flex justify-center items-center bg-brand-accent hover:bg-yellow-600 text-white font-bold py-4 px-6 rounded-lg shadow-md transition-colors duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSubmitting || submissionStatus === 'submitting' ? (
-          <>
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Submitting...
-          </>
-        ) : (
-          'Submit Application'
-        )}
-      </button>
+      <div className="pt-4">
+        <button
+          type="submit"
+          disabled={isSubmitting || submissionStatus === 'submitting'}
+          className="w-full flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-md transition-all duration-300 hover:scale-105 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        >
+          {isSubmitting || submissionStatus === 'submitting' ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Submitting Application...
+            </>
+          ) : (
+            'Submit Application'
+          )}
+        </button>
+        <p className="text-center text-gray-500 text-sm mt-4">
+          By submitting this application, you agree to our <a href="#" className="text-blue-600 hover:underline">Terms & Conditions</a>
+        </p>
+      </div>
     </form>
   );
 };

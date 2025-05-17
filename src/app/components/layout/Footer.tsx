@@ -58,19 +58,21 @@ const Footer = () => {
       </div>
 
       {/* Main Footer Content */}
-      <div className={`bg-gradient-to-b from-blue-800 to-blue-900 pt-24 pb-8 relative transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`bg-gradient-to-b from-indigo-900 via-indigo-950 to-blue-950 pt-24 pb-8 relative transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         {/* Animated Decorative Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full"
-             style={{filter: 'blur(70px)', animation: 'pulse 8s infinite alternate'}}></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full"
-             style={{filter: 'blur(70px)', animation: 'float 10s infinite alternate'}}></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-500/10 rounded-full"
+             style={{filter: 'blur(100px)', animation: 'pulse 8s infinite alternate'}}></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full"
+             style={{filter: 'blur(100px)', animation: 'float 10s infinite alternate'}}></div>
+        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-teal-500/5 rounded-full"
+             style={{filter: 'blur(80px)', animation: 'pulse-slow 15s infinite alternate'}}></div>
 
         {/* Animated Particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(10)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              className="absolute w-1.5 h-1.5 bg-white/30 rounded-full"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
@@ -83,6 +85,23 @@ const Footer = () => {
 
         {/* Subtle grid pattern overlay */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzMzMiIGZpbGwtb3BhY2l0eT0iMC4wMiI+PHBhdGggZD0iTTM2IDM0aDR2MWgtNHYtMXptMC0yaDF2NGgtMXYtNHptMi0yaDF2MWgtMXYtMXptLTIgMmgxdjFoLTF2LTF6bS0yLTJoMXYxaC0xdi0xem0yLTJoMXYxaC0xdi0xem0tMiAyaDF2MWgtMXYtMXptLTItMmgxdjFoLTF2LTF6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-10"></div>
+
+        {/* Star field effect */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={`star-${i}`}
+              className="absolute w-0.5 h-0.5 bg-white rounded-full"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.7,
+                animation: `twinkle ${Math.random() * 5 + 3}s ease-in-out infinite alternate`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            ></div>
+          ))}
+        </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Main Footer Grid */}
@@ -147,7 +166,7 @@ const Footer = () => {
                     <FaMapMarkerAlt />
                   </div>
                   <span className="text-gray-300 group-hover:text-white transition-colors">
-                    Far Western University, Kanchanpur, Mahendranagar, Katan-5, Nepal
+                    Bheemdatta Municipality-18, Mahendranagar, Kanchanpur, Nepal
                   </span>
                 </li>
                 <li className="flex items-center group">
@@ -169,10 +188,50 @@ const Footer = () => {
               </ul>
 
               {/* Google Maps */}
-              <div className="mt-6 rounded-lg overflow-hidden shadow-lg border-2 border-blue-700/50 hover:border-teal-400/50 transition-colors duration-300">
-                <div className="bg-blue-800/50 text-xs text-center py-1 text-gray-300">Campus Location</div>
-                <div className="h-32 bg-blue-900/50 flex items-center justify-center">
-                  <span className="text-teal-400 text-sm">Interactive Map</span>
+              <div className="mt-6 rounded-lg overflow-hidden shadow-lg border-2 border-blue-700/50 hover:border-teal-400/30 transition-all duration-500 group">
+                <div className="bg-gradient-to-r from-blue-800/80 to-indigo-800/80 text-xs text-center py-2 text-gray-300 font-medium flex items-center justify-center">
+                  <FaMapMarkerAlt className="text-teal-400 mr-2" />
+                  <span>Campus Location</span>
+                </div>
+                <div className="relative h-48 w-full overflow-hidden">
+                  {/* Map iframe */}
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.6724521063635!2d80.18915937547953!3d28.699999175628036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a1a0aaaaaaaaab%3A0x0!2zMjjCsDQyJzAwLjAiTiA4MMKwMTEnMjguMCJF!5e0!3m2!1sen!2sus!4v1718193600000!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen={false}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="grayscale group-hover:grayscale-0 transition-all duration-500"
+                  ></iframe>
+
+                  {/* Overlay with pulse effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 to-transparent opacity-60 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none"></div>
+
+                  {/* Pulsing location marker */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+                    <div className="relative">
+                      <div className="w-4 h-4 bg-teal-400 rounded-full"></div>
+                      <div className="absolute inset-0 w-4 h-4 bg-teal-400 rounded-full animate-ping opacity-75"></div>
+                      <div className="absolute -inset-2 w-8 h-8 bg-teal-400/30 rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+
+                  {/* Get directions button */}
+                  <div className="absolute bottom-3 right-3 z-10">
+                    <a
+                      href="https://www.google.com/maps/dir//28.7000000,80.1911111/@28.6999992,80.1891594,17z"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-indigo-600/90 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-md flex items-center transition-all duration-300 shadow-lg hover:shadow-indigo-500/30"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                      </svg>
+                      Directions
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,38 +289,79 @@ const Footer = () => {
           </div>
 
           {/* Footer Bottom */}
-          <div className="border-t border-blue-700/50 pt-8 mt-8">
-            {/* Copyright & Credits */}
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="text-center md:text-left mb-4 md:mb-0">
-                <p className="text-gray-400 text-sm">
-                  © {new Date().getFullYear()} Far Western University, Nepal. All Rights Reserved.
-                </p>
-                <p className="text-gray-500 text-xs mt-1">
-                  Established by the Act of Parliament, 2010
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <Link href="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
-                  Privacy Policy
-                </Link>
-                <span className="text-gray-600">•</span>
-                <Link href="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
-                  Terms of Use
-                </Link>
-                <span className="text-gray-600">•</span>
-                <Link href="/sitemap" className="text-gray-400 hover:text-white text-sm transition-colors">
-                  Sitemap
-                </Link>
+          <div className="relative">
+            {/* Decorative divider */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
+              <div className="h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent w-full"></div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                  <div className="w-10 h-10 rounded-full bg-indigo-950 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Credits */}
-            <div className="text-center mt-6">
-              <p className="text-gray-500 text-xs flex items-center justify-center">
-                Designed with <span className="text-red-500 mx-1">♥</span> by Innovators for Innovators
-              </p>
+            <div className="pt-12 mt-8">
+              {/* Copyright & Credits */}
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <div className="text-center md:text-left mb-4 md:mb-0">
+                  <div className="flex items-center justify-center md:justify-start mb-2">
+                    <div className="w-8 h-8 bg-indigo-800/50 rounded-full flex items-center justify-center mr-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+                      </svg>
+                    </div>
+                    <span className="text-indigo-300 font-semibold">Far Western University</span>
+                  </div>
+                  <p className="text-gray-400 text-sm">
+                    © {new Date().getFullYear()} Far Western University, Nepal. All Rights Reserved.
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1">
+                    Established by the Act of Parliament, 2010
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center md:items-end">
+                  <div className="flex items-center space-x-4 mb-4">
+                    <Link href="/privacy" className="text-gray-400 hover:text-indigo-300 text-sm transition-colors">
+                      Privacy Policy
+                    </Link>
+                    <span className="text-gray-600">•</span>
+                    <Link href="/terms" className="text-gray-400 hover:text-indigo-300 text-sm transition-colors">
+                      Terms of Use
+                    </Link>
+                    <span className="text-gray-600">•</span>
+                    <Link href="/sitemap" className="text-gray-400 hover:text-indigo-300 text-sm transition-colors">
+                      Sitemap
+                    </Link>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <a href="https://www.facebook.com/fwu" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                      <FaFacebook size={16} />
+                    </a>
+                    <a href="https://www.twitter.com/fwu" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                      <FaTwitter size={16} />
+                    </a>
+                    <a href="https://www.linkedin.com/company/fwu" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                      <FaLinkedin size={16} />
+                    </a>
+                    <a href="https://www.instagram.com/fwu" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                      <FaInstagram size={16} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Credits */}
+              <div className="text-center mt-8 pt-4 border-t border-indigo-800/30">
+                <p className="text-gray-500 text-xs flex items-center justify-center">
+                  Designed with <span className="text-red-500 mx-1 animate-pulse">♥</span> by Innovators for Innovators
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -269,12 +369,15 @@ const Footer = () => {
         {/* Scroll to Top Button */}
         <button
           onClick={scrollToTop}
-          className={`fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gradient-to-r from-teal-400 to-blue-500 text-white flex items-center justify-center shadow-lg transform transition-all duration-300 ${
+          className={`fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white flex items-center justify-center shadow-lg transform transition-all duration-500 hover:scale-110 hover:shadow-indigo-500/30 ${
             showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
           }`}
           aria-label="Scroll to top"
         >
-          <FaChevronUp />
+          <div className="absolute inset-0 rounded-full bg-indigo-600 animate-ping opacity-20"></div>
+          <div className="relative z-10 flex items-center justify-center">
+            <FaChevronUp className="text-white" />
+          </div>
         </button>
       </div>
 
@@ -293,6 +396,14 @@ const Footer = () => {
           10% { opacity: 1; }
           90% { opacity: 0.5; }
           100% { transform: translateY(-1000px); opacity: 0; }
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.1; transform: scale(1); }
+          50% { opacity: 0.7; transform: scale(1.2); }
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.1); }
         }
       `}</style>
     </footer>

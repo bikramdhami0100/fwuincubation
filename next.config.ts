@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'fwu.edu.np',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.fwu.edu.np',
+        pathname: '**',
+      },
     ],
   },
 };

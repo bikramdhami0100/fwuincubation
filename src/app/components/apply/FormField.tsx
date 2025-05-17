@@ -49,25 +49,32 @@ const FormField = <T extends InputProps | TextareaProps>({
   const commonProps = {
     id: name,
     placeholder,
-    className: `w-full px-4 py-3 border ${
-      error ? 'border-red-500' : 'border-gray-300'
-    } rounded-lg focus:ring-2 ${
-      error ? 'focus:ring-red-300' : 'focus:ring-brand-primary'
-    } focus:border-transparent outline-none transition-colors ${className}`,
-    ...register(name), // Spread the result of register
+    className: `w-full px-4 py-3 border-2 ${
+      error ? 'border-red-300 bg-red-50' : 'border-gray-200 focus:border-blue-300'
+    } rounded-lg ${
+      error ? 'focus:ring-red-200' : 'focus:ring-blue-100'
+    } focus:ring-4 outline-none transition-all ${className}`,
+    ...register(name),
   };
 
   return (
     <div className="mb-6">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
-        {label} {isRequired && <span className="text-red-500">*</span>}
+      <label htmlFor={name} className="flex items-center text-sm font-medium text-gray-700 mb-2">
+        {label} {isRequired && <span className="text-red-500 ml-1">*</span>}
       </label>
       {as === 'textarea' ? (
         <textarea {...commonProps} rows={rows} />
       ) : (
         <input type={type} {...commonProps} accept={accept} />
       )}
-      {error && <p className="mt-1 text-xs text-red-500">{error.message}</p>}
+      {error && (
+        <div className="mt-2 flex items-start text-sm text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>{error.message}</span>
+        </div>
+      )}
     </div>
   );
 };
