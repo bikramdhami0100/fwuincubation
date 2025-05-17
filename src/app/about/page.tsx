@@ -39,20 +39,25 @@ export default function AboutPage() {
       { threshold: 0.1 }
     );
 
-    if (heroRef.current) {
-      heroObserver.observe(heroRef.current);
+    // Store current ref values in variables to use in cleanup
+    const currentHeroRef = heroRef.current;
+    const currentStatsRef = statsRef.current;
+
+    if (currentHeroRef) {
+      heroObserver.observe(currentHeroRef);
     }
 
-    if (statsRef.current) {
-      statsObserver.observe(statsRef.current);
+    if (currentStatsRef) {
+      statsObserver.observe(currentStatsRef);
     }
 
     return () => {
-      if (heroRef.current) {
-        heroObserver.unobserve(heroRef.current);
+      // Use the stored ref values in cleanup
+      if (currentHeroRef) {
+        heroObserver.unobserve(currentHeroRef);
       }
-      if (statsRef.current) {
-        statsObserver.unobserve(statsRef.current);
+      if (currentStatsRef) {
+        statsObserver.unobserve(currentStatsRef);
       }
     };
   }, []);

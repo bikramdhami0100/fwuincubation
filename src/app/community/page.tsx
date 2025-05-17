@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiUsers, FiCalendar, FiMapPin, FiArrowRight, FiMessageCircle, FiLink, FiGlobe, FiClock } from 'react-icons/fi';
+import { FiUsers, FiCalendar, FiMapPin, FiArrowRight, FiLink, FiGlobe, FiClock } from 'react-icons/fi';
 
 // Community Member Type
 interface CommunityMember {

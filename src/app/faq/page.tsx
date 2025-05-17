@@ -21,13 +21,17 @@ export default function FaqPage() {
       { threshold: 0.1 }
     );
 
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
+    // Store current ref value in a variable to use in cleanup
+    const currentRef = heroRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (heroRef.current) {
-        observer.unobserve(heroRef.current);
+      // Use the stored ref value in cleanup
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

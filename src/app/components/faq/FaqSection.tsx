@@ -169,7 +169,7 @@ const FaqSection: React.FC<FaqSectionProps> = ({ faqs, searchQuery = '' }) => {
 
         <div className="mt-16 text-center">
           <div className="max-w-2xl mx-auto bg-indigo-50 rounded-xl p-8">
-            <h3 className="text-xl font-bold text-indigo-900 mb-3">Can't find the answer you're looking for?</h3>
+            <h3 className="text-xl font-bold text-indigo-900 mb-3">Can&apos;t find the answer you&apos;re looking for?</h3>
             <p className="text-gray-600 mb-6">
               Our team is ready to assist you with any specific questions about the FWU Incubation Center.
             </p>

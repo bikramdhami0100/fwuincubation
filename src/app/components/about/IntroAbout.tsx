@@ -20,13 +20,17 @@ const IntroAbout = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Store current ref value in a variable to use in cleanup
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      // Use the stored ref value in cleanup
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);

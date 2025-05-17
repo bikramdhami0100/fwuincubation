@@ -3,15 +3,17 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Logo from '../common/Logo';
 import { FiMenu, FiX, FiGlobe, FiChevronDown } from 'react-icons/fi';
-import { FaGraduationCap, FaRocket, FaUsers, FaEnvelope, FaHome, FaRegLightbulb } from 'react-icons/fa';
+import { FaRocket, FaUsers, FaEnvelope, FaHome, FaRegLightbulb, FaBook } from 'react-icons/fa';
 
-const menuItems: { name: string; href: string; icon: React.ReactNode }[] = [
+const menuItems: { name: string; href: string; icon: React.ReactNode; isHighlighted?: boolean }[] = [
   { name: 'Home', href: '/', icon: <FaHome className="w-4 h-4" /> },
   { name: 'About', href: '/about', icon: <FaUsers className="w-4 h-4" /> },
-  { name: 'Programs', href: '/programs', icon: <FaGraduationCap className="w-4 h-4" /> },
-  { name: 'Startups', href: '/startups', icon: <FaRocket className="w-4 h-4" /> },
+  // { name: 'Academic Programs', href: '/programs', icon: <FaGraduationCap className="w-4 h-4" />, isHighlighted: true },
+  { name: 'Proposals', href: '/submit-proposal', icon: <FaRocket className="w-4 h-4" /> },
+  { name: 'Research', href: '/research', icon: <FaBook className="w-4 h-4" /> },
+  { name: 'Projects', href: '/projects', icon: <FaRegLightbulb className="w-4 h-4" /> },
+  { name: 'News', href: '/news', icon: <FaRegLightbulb className="w-4 h-4" /> },
   { name: 'Contact', href: '/contact', icon: <FaEnvelope className="w-4 h-4" /> },
-  { name: 'Community', href: '/community', icon: <FaRegLightbulb className="w-4 h-4" /> }
 ];
 
 const Header = () => {
@@ -119,16 +121,29 @@ const Header = () => {
                     className={`px-4 py-2.5 rounded-lg text-white font-medium transition-all duration-300 relative group ${
                       isActive
                         ? 'bg-white/10 text-white before:absolute before:bottom-0 before:left-0 before:w-full before:h-0.5 before:bg-indigo-400'
-                        : 'hover:bg-white/5'
+                        : item.isHighlighted
+                          ? 'bg-blue-600/30 hover:bg-blue-600/40 border border-blue-500/30'
+                          : 'hover:bg-white/5'
                     }`}
                   >
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className={`absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                      item.isHighlighted ? 'animate-pulse' : ''
+                    }`}></div>
 
                     <span className="relative flex items-center">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500/10 mr-2 group-hover:bg-indigo-500/20 transition-colors duration-300">
+                      <span className={`flex items-center justify-center w-6 h-6 rounded-full mr-2 transition-colors duration-300 ${
+                        item.isHighlighted
+                          ? 'bg-blue-500/30 group-hover:bg-blue-500/40 text-blue-100'
+                          : 'bg-indigo-500/10 group-hover:bg-indigo-500/20'
+                      }`}>
                         {item.icon}
                       </span>
                       {item.name}
+                      {item.isHighlighted && (
+                        <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-blue-500 text-white rounded-sm">
+                          NEW
+                        </span>
+                      )}
                     </span>
 
                     {/* Bottom border animation */}
@@ -138,20 +153,7 @@ const Header = () => {
               })}
 
               {/* Apply Button */}
-              <Link
-                href="/apply"
-                className="ml-4 relative overflow-hidden group"
-              >
-                <span className="relative z-10 flex items-center justify-center px-6 py-2.5 rounded-lg font-bold bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 shadow-md hover:shadow-indigo-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
-                  Apply Now
-                  <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                  </svg>
-                </span>
-
-                {/* Glow effect */}
-                <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-indigo-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"></span>
-              </Link>
+        
 
               {/* Language Switcher - Desktop */}
               <div className="relative ml-4">
@@ -219,7 +221,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        
+
       </div>
 
       {/* Mobile Menu with animation */}
@@ -262,17 +264,30 @@ const Header = () => {
                     className={`flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 ${
                       isActive
                         ? 'bg-indigo-700/50 text-white'
-                        : 'text-indigo-100 hover:bg-indigo-700/30 hover:text-white'
+                        : item.isHighlighted
+                          ? 'bg-blue-700/30 text-white border border-blue-600/30'
+                          : 'text-indigo-100 hover:bg-indigo-700/30 hover:text-white'
                     }`}
                     style={{
                       transitionDelay: `${100 + index * 50}ms`,
                       animation: isMobileMenuOpen ? `fadeSlideIn 0.4s ease-out forwards ${100 + index * 50}ms` : 'none'
                     }}
                   >
-                    <span className="bg-indigo-600/50 p-2.5 rounded-lg mr-3 text-white">
+                    <span className={`p-2.5 rounded-lg mr-3 text-white ${
+                      item.isHighlighted
+                        ? 'bg-blue-600/70 animate-pulse'
+                        : 'bg-indigo-600/50'
+                    }`}>
                       {item.icon}
                     </span>
-                    {item.name}
+                    <div className="flex items-center">
+                      {item.name}
+                      {item.isHighlighted && (
+                        <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-blue-500 text-white rounded-sm">
+                          NEW
+                        </span>
+                      )}
+                    </div>
                   </Link>
                 );
               })}

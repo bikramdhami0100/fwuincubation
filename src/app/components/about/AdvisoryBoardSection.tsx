@@ -70,13 +70,17 @@ const AdvisoryBoardSection = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Store current ref value in a variable to use in cleanup
+    const currentRef = sectionRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      // Use the stored ref value in cleanup
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -113,8 +117,8 @@ const AdvisoryBoardSection = () => {
         <div className={`mt-16 text-center transition-all duration-700 delay-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <blockquote className="bg-white p-8 rounded-xl shadow-lg border border-blue-100 max-w-3xl mx-auto relative">
             {/* Large quote marks */}
-            <div className="absolute top-4 left-4 text-blue-200 opacity-50 text-6xl font-serif">"</div>
-            <div className="absolute bottom-4 right-4 text-blue-200 opacity-50 text-6xl font-serif">"</div>
+            <div className="absolute top-4 left-4 text-blue-200 opacity-50 text-6xl font-serif">&ldquo;</div>
+            <div className="absolute bottom-4 right-4 text-blue-200 opacity-50 text-6xl font-serif">&rdquo;</div>
 
             <p className="text-xl text-gray-700 italic relative z-10 mb-4">
               The advisory board is committed to supporting Far Western University in its mission to provide quality education

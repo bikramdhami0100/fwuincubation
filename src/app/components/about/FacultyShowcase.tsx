@@ -98,12 +98,15 @@ const FacultyShowcase = () => {
       { threshold: 0.1 }
     );
 
+    // Store current ref value in a variable to use in cleanup
     const currentRef = sectionRef.current;
+
     if (currentRef) {
       observer.observe(currentRef);
     }
 
     return () => {
+      // Use the stored ref value in cleanup
       if (currentRef) {
         observer.unobserve(currentRef);
       }
