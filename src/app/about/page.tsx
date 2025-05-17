@@ -1,14 +1,12 @@
 "use client"
 import { useEffect, useState, useRef } from 'react';
-import AdvisoryBoardSection from '../components/about/AdvisoryBoardSection';
 import IntroAbout from '../components/about/IntroAbout';
-import TeamSection from '../components/about/TeamSection';
-import HistoryTimeline from '../components/about/HistoryTimeline';
 import FacultyShowcase from '../components/about/FacultyShowcase';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaUniversity, FaGraduationCap, FaUsers, FaChevronDown, FaArrowRight } from 'react-icons/fa';
-import { FiBook, FiAward, FiMapPin, FiCalendar } from 'react-icons/fi';
+import { FiBook, FiAward, FiMapPin, FiCalendar, FiArrowRight, FiPhone, FiMail } from 'react-icons/fi';
+import SectionTitle from '../components/shared/SectionTitle';
 
 export default function AboutPage() {
   const [isVisible, setIsVisible] = useState(false);
