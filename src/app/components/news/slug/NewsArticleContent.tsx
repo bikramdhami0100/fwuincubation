@@ -1,10 +1,11 @@
 "use client"
 import { useState, useEffect } from 'react';
-import { NewsItemData, allNewsData } from '../../news/page';
 import { FiCalendar, FiTag, FiClock, FiShare2, FiArrowLeft } from 'react-icons/fi';
 import Image from 'next/image';
 import Link from 'next/link';
-import NewsRelated from './NewsRelated';
+import { allNewsData, NewsItemData } from '@/app/news/page';
+import NewsRelated from '../NewsRelated';
+
 
 interface NewsArticleContentProps {
   article: NewsItemData | null;
@@ -16,6 +17,8 @@ export default function NewsArticleContent({ article }: NewsArticleContentProps)
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+
 
   if (!article) {
     return (

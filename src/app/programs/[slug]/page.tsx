@@ -1,18 +1,21 @@
-import { allProgramsData } from "../page";
-import ProgramContent from "../../components/programs/slug/ProgramContent";
+import ProgramContent from "@/app/components/programs/slug/ProgramContent";
+import { programsData } from "@/data/programsData";
+
 
 // This is a server component
 export default function ProgramPage({ params }: { params: { slug: string } }) {
   // Find the program with the matching slug
-  const program:any = allProgramsData.find((item) => item.slug === params.slug) || null;
-
-  // Pass the program to the client component
+  const program = programsData?.find((item) => item?.slug === params?.slug) || null;
+  // Pass the program to the client componen
+    if(!program){
+    return <div>Program not found</div>;
+  }
   return <ProgramContent program={program} />;
 }
 
 // Generate static params for all programs
-export async function generateStaticParams() {
-  return allProgramsData.map((program) => ({
-    slug: program.slug,
-  }));
-}
+// export async function generateStaticParams() {
+//   return allProgramsData.map((program) => ({
+//     slug: program.slug,
+//   }));
+// }

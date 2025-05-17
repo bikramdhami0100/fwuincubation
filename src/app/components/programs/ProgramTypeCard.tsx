@@ -2,7 +2,7 @@ import { IconType } from 'react-icons';
 import { FiArrowRight } from 'react-icons/fi';
 import Link from 'next/link';
 
-interface ProgramTypeCardProps {
+export interface ProgramTypeCardProps {
   icon: React.ReactElement<IconType>;
   title: string;
   description: string;

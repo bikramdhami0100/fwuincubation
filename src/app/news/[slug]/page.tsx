@@ -1,19 +1,15 @@
-import NewsArticleContent from '@/app/components/news/slug/NewsArticleContent';
-import { NewsItemData, allNewsData } from '../page';
+"use client"
+import { allNewsData, NewsItemData } from '../page';
+import NewsArticleContent from '@/app/components/news/slug/NewsArticleContent'; // ✅ must be a Client Component
 
-
-// This is a server component
-export default function NewsArticlePage({ params }: { params: { slug: string } }) {
-  // Find the article with the matching slug
-  const article = allNewsData.find((item: NewsItemData) => item.slug === params.slug) || null;
-
-  // Pass the article to the client component
-  return <NewsArticleContent article={article} />;
+interface NewsArticlePageProps {
+  params: {
+    slug: string;
+  };
 }
 
-// Generate static params for all news items
-export async function generateStaticParams() {
-  return allNewsData.map((item: NewsItemData) => ({
-    slug: item.slug,
-  }));
+export default function NewsArticlePage({ params }: NewsArticlePageProps) {
+  const article = allNewsData.find((item: NewsItemData) => item.slug === params.slug) || null;
+
+  return <NewsArticleContent article={article} />;
 }

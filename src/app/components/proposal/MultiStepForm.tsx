@@ -1,11 +1,12 @@
 "use client"
 import { useState, useEffect } from 'react';
+
+import { FiChevronRight, FiChevronLeft, FiCheck } from 'react-icons/fi';
 import ProjectDetailsStep from './steps/ProjectDetailsStep';
 import TeamInfoStep from './steps/TeamInfoStep';
 import ProposalUploadStep from './steps/ProposalUploadStep';
 import ReviewStep from './steps/ReviewStep';
 import SuccessStep from './steps/SuccessStep';
-import { FiChevronRight, FiChevronLeft, FiCheck } from 'react-icons/fi';
 
 // Form data interface
 export interface ProposalFormData {
@@ -59,8 +60,6 @@ const MultiStepForm: React.FC = () => {
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -119,7 +118,6 @@ const MultiStepForm: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       setIsSubmitting(false);
-      setIsSubmitted(true);
       setCurrentStep(5); // Move to success step
       window.scrollTo(0, 0);
     }

@@ -1,15 +1,16 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ProgramData } from '../../../programs/page';
-import ProgramDetails from '../ProgramDetails';
-import ProgramCurriculum from '../ProgramCurriculum';
-import ProgramFaculty from '../ProgramFaculty';
-import ProgramApplication from '../ProgramApplication';
+
 import { FiArrowLeft, FiBookOpen, FiUsers, FiCalendar, FiFileText } from 'react-icons/fi';
+import ProgramApplication from '../ProgramApplication';
+import ProgramFaculty from '../ProgramFaculty';
+import ProgramCurriculum from '../ProgramCurriculum';
+import ProgramDetails from '../ProgramDetails';
+import { ProgramTypeCardProps } from '../ProgramTypeCard';
 
 interface ProgramContentProps {
-  program: ProgramData | null;
+  program: ProgramTypeCardProps|null
 }
 
 const ProgramContent: React.FC<ProgramContentProps> = ({ program }) => {
@@ -72,10 +73,10 @@ const ProgramContent: React.FC<ProgramContentProps> = ({ program }) => {
             
             <div className="mb-4 flex flex-wrap gap-2">
               <span className="text-xs font-semibold px-3 py-1 rounded-full bg-blue-700/50 text-blue-100 border border-blue-400/30">
-                {program.department}
+                {/* {program?.department} */}
               </span>
               <span className="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-700/50 text-indigo-100 border border-indigo-400/30">
-                {program.level}
+                {/* {program?.level} */}
               </span>
             </div>
             
@@ -90,15 +91,15 @@ const ProgramContent: React.FC<ProgramContentProps> = ({ program }) => {
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-indigo-100">
               <div className="flex items-center">
                 <FiCalendar className="mr-2" />
-                <span>Duration: {program.duration}</span>
+                {/* <span>Duration: {program.duration}</span> */}
               </div>
               <div className="flex items-center">
                 <FiBookOpen className="mr-2" />
-                <span>{program.credits} Credits</span>
+                {/* <span>{program.credits} Credits</span> */}
               </div>
               <div className="flex items-center">
                 <FiUsers className="mr-2" />
-                <span>Class Size: {program.classSize} Students</span>
+                {/* <span>Class Size: {program.classSize} Students</span> */}
               </div>
             </div>
           </div>
@@ -191,7 +192,7 @@ const ProgramContent: React.FC<ProgramContentProps> = ({ program }) => {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Ready to Apply?</h2>
             <p className="text-xl text-indigo-100 mb-8">
-              Take the next step in your academic journey with Far Western University. Applications for the {program.nextIntake} intake are now open.
+              {/* Take the next step in your academic journey with Far Western University. Applications for the {program.nextIntake} intake are now open. */}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link 
